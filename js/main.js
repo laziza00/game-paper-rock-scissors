@@ -1,82 +1,111 @@
-// Setting the scores and selecting our HTML elements.
-let computerScore = 1;
-let playerScore = 1;
-const pScore = document.getElementById('playerScore');
-const cScore = document.getElementById('computerScore');
-const buttons = document.querySelectorAll('.selection button');
-const showIcon = document.querySelector('.show i');
-const computerShowIcon = document.querySelector('.computer i');
-// The randomClass array below this contains the rock,paper, and scissor Icon from font-awesome.
-const randomClasses = ["fas fa-hand-rock", "fas fa-hand-paper","fas fa-hand-scissors"];
-const text = document.getElementById('demo');
-const text2 = document.getElementById('demo2');
 
-// Game Functionality: Setting forEach function for the buttons.
-const game = () =>{
-    buttons.forEach(btn =>{
-        btn.addEventListener('click',(e)=>{
-        // Random rock paper scissor for the computer and the player
-           let clickedBtn = e.target.className;
-           showIcon.className = clickedBtn;
-           let randomNum = Math.floor(Math.random() * randomClasses.length);
-           computerShowIcon.className = randomClasses[randomNum];
-           // Game Score.
-           // If it's a Tie .
-           if(showIcon.className === computerShowIcon.className){
-               pScore.innerHTML = pScore.innerHTML;
-               cScore.innerHTML = cScore.innerHTML;
-               text.innerHTML = "It's a Tie ! ";
-               text.style.color = 'orange';
-               text2.innerHTML = text.innerHTML;
-               text2.style.color = 'orange';
-           } 
-          // if it's not a Tie.
-           else if(showIcon.className === randomClasses[0] && computerShowIcon.className === randomClasses[2]){
-               pScore.innerHTML = playerScore;
-               playerScore++;
-               text.innerHTML = "It's a Win ! ";
-               text.style.color = 'rgb(1, 146, 1)';
-               text2.innerHTML = text.innerHTML;
-               text2.style.color = 'rgb(1, 146, 1)';
-           }else if(showIcon.className === randomClasses[0] && computerShowIcon.className === randomClasses[1]){
-               cScore.innerHTML = computerScore;
-               computerScore++;
-               text.innerHTML = "You Loosed ! ";
-               text.style.color = 'red';
-               text2.innerHTML = text.innerHTML;
-               text2.style.color = 'red';
-           }else if(showIcon.className === randomClasses[1] && computerShowIcon.className === randomClasses[2]){
-               cScore.innerHTML = computerScore;
-               computerScore++;
-               text.innerHTML = "You Loosed ! ";
-               text.style.color = 'red';
-               text2.innerHTML = text.innerHTML;
-               text2.style.color = 'red';
-           }else if(showIcon.className === randomClasses[1] && computerShowIcon.className === randomClasses[0]){
-               pScore.innerHTML = playerScore;
-               playerScore++;
-               text.innerHTML = "It's a Win ! ";
-               text.style.color = 'rgb(1, 146, 1)';
-               text2.innerHTML = text.innerHTML;
-               text2.style.color = 'rgb(1, 146, 1)';
-           }else if(showIcon.className === randomClasses[2] && computerShowIcon.className === randomClasses[0]){
-               cScore.innerHTML = computerScore;
-               computerScore++;
-               text.innerHTML = "You Loosed ! ";
-               text.style.color = 'red';
-               text2.innerHTML = text.innerHTML;
-               text2.style.color = 'red';
-           }else if(showIcon.className === randomClasses[2] && computerShowIcon.className === randomClasses[1]){
-               pScore.innerHTML = playerScore;
-               playerScore++;
-               text.innerHTML = "It's a Win ! ";
-               text.style.color = 'rgb(1, 146, 1)';
-               text2.innerHTML = text.innerHTML;
-               text2.style.color = 'rgb(1, 146, 1)';
-           }
-        });
-    });
+const computerChoiceDisplay = document.querySelector('#computer__choice')
+const userChoiceDisplay = document.querySelector('#user-choice')
+const resultDisplay = document.querySelector('#result')
+
+// btns
+let rockBtn = document.querySelector('#rockbtn')
+let paperBtn = document.querySelector('#paperbtn')
+let scissorsBtn = document.querySelector('#scissorsbtn')
+
+// score
+let yourScore = document.querySelector('#Youscore')
+let compScore = document.querySelector('#compScore')
+
+// visualuu score
+// let you_scoreText = document.querySelector('#')
+// let comp_scoreText= document.querySelector('#')
+
+
+const possibleChoices = document.querySelectorAll('button');
+
+let userChoice
+let ComputerChoice
+let result
+
+
+let your_score = 0
+let comp_score = 0
+
+possibleChoices.forEach(possibleChoices =>possibleChoices.addEventListener('click', (e) => {
+    userChoice = e.target.id;
+    userChoiceDisplay.innerHTML = userChoice;
+    generateComputerChoice()
+    getResult()
+
+}))
+
+function generateComputerChoice(){
+    const randomNumber = Math.floor(Math.random()*3)+1;
+
+    if(randomNumber===1) {
+        ComputerChoice ='rock';
+    }
+    if(randomNumber===2) {
+        ComputerChoice ='scissors';
+    }
+    if(randomNumber===3) {
+        ComputerChoice ='paper';
+    }
+    computerChoiceDisplay.innerHTML = ComputerChoice
 }
-// Calling the function.
-game();
-// This function contains all the game logic.
+function getResult() {
+    if (ComputerChoice== 'rock' && userChoice=='rock') {
+        result ='its a draw'
+    }
+    if (ComputerChoice=='rock' && userChoice=='paper') {
+        result ='you win!'
+        your_score++
+        yourScore.textContent = your_score
+    }
+    if (ComputerChoice== 'rock' && userChoice=='scissors') {
+        result ='its a lost'
+        comp_score++
+        compScore.textContent= comp_score
+    }
+    if (ComputerChoice== 'paper' && userChoice=='paper') {
+        result ='its a draw'
+    }
+    if (ComputerChoice== 'paper' && userChoice=='scissors') {
+        result ='its a win'
+        your_score++
+        yourScore.textContent = your_score
+    }
+    if (ComputerChoice== 'paper' && userChoice=='rock') {
+        result ='its a lost'
+        comp_score++
+        compScore.textContent= comp_score
+    }
+    if (ComputerChoice== 'scissors' && userChoice=='scissors') {
+        result ='its a draw'
+    }
+    if (ComputerChoice== 'scissors' && userChoice=='rock') {
+        result ='its a win'
+        your_score++
+        yourScore.textContent = your_score
+    }
+    if (ComputerChoice== 'scissors' && userChoice=='paper') {
+        result ='its a lost'
+        comp_score++
+        compScore.textContent= comp_score
+    }
+    winandLose();
+    resultDisplay.innerHTML= result
+}
+
+function winandLose() {
+    if(your_score==5) {
+        alert('Your score is 5, You Win')
+        your_score =0;
+        comp_score =0;
+        you_scoreText.textContent = your_score
+        comp_scoreText.textContent = your_score
+    }
+    else if (comp_score == 5) {
+        alert('Player score is 5, YOU LOSE!');
+        y_scr = 0;
+        r_scr = 0;
+        you_scoreText.textContent = your_score
+        comp_scoreText.textContent = your_score
+      }
+}
