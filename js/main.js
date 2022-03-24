@@ -98,14 +98,14 @@ function winandLose() {
         alert('Your score is 5, You Win')
         your_score =0;
         comp_score =0;
-        you_scoreText.textContent = your_score
-        comp_scoreText.textContent = your_score
+        compScore.textContent= comp_score
+        yourScore.textContent = your_score
     }
     else if (comp_score == 5) {
         alert('Player score is 5, YOU LOSE!');
-        y_scr = 0;
-        r_scr = 0;
-        you_scoreText.textContent = your_score
-        comp_scoreText.textContent = your_score
+        your_score =0;
+        comp_score =0;
+        compScore.textContent= comp_score
+        yourScore.textContent = your_score
       }
 }
